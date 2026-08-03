@@ -186,3 +186,29 @@
 .leaflet-control-attribution {
   display: none !important;
 }
+
+/* —— Public event invite typography —— */
+.event-invite .event-names {
+  font-family: var(--font-event-names), cursive;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  /* Italianno is Regular-only; synthesize a bolder stroke */
+  -webkit-text-stroke: 0.35px currentColor;
+  text-shadow: 0 0 0.4px currentColor;
+}
+
+.event-invite .event-amp {
+  font-family: var(--font-event-names), cursive;
+  font-weight: 700;
+  -webkit-text-stroke: 0.35px currentColor;
+  text-shadow: 0 0 0.4px currentColor;
+}
+
+.event-invite .event-welcome,
+.event-invite .event-verse {
+  font-family: var(--font-event-serif), Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.55;
+}

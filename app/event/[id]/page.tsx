@@ -218,8 +218,8 @@ export default function PublicEventPage({ params }: { params: Promise<{ id: stri
               <Heart className="size-3 fill-current" />
               {eventType}
             </span>
-            <h1 className="mt-2.5 text-balance text-3xl font-bold leading-tight text-white sm:text-4xl">
-              {event.groom} &amp; {event.bride}
+            <h1 className="event-names mt-2.5 text-balance text-4xl text-white sm:text-5xl lg:text-6xl">
+              {event.groom} <span className="event-amp text-primary">&amp;</span> {event.bride}
             </h1>
             <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-white/80">
               <span className="flex items-center gap-1.5">
@@ -307,7 +307,9 @@ export default function PublicEventPage({ params }: { params: Promise<{ id: stri
               <Heart className="size-4 fill-current" />
               <h2 className="text-[15px] font-bold text-foreground">{t.welcomeTitle}</h2>
             </div>
-            <p className="text-sm leading-relaxed text-muted-foreground">{t.welcomeMessage}</p>
+            <p className="event-welcome text-[19px] leading-relaxed text-foreground/90">
+              {t.welcomeMessage}
+            </p>
             {event.hashtag ? (
               <p className="text-xs font-bold text-primary">{event.hashtag}</p>
             ) : null}
@@ -326,7 +328,7 @@ export default function PublicEventPage({ params }: { params: Promise<{ id: stri
             <p className="relative text-[11px] font-bold uppercase tracking-[0.18em] text-primary">
               {t.scripture}
             </p>
-            <p className="relative mt-3 text-balance text-[15px] font-medium leading-relaxed text-foreground italic">
+            <p className="event-verse relative mt-3 text-balance text-[19px] leading-relaxed text-foreground">
               &ldquo;{t.bibleText}&rdquo;
             </p>
             <p className="relative mt-3 text-xs font-bold text-muted-foreground">
@@ -403,8 +405,8 @@ export default function PublicEventPage({ params }: { params: Promise<{ id: stri
           >
             <div className="flex items-center justify-between px-4 py-3 sm:px-6">
               <div>
-                <p className="text-sm font-bold text-white">
-                  {event.groom} &amp; {event.bride}
+                <p className="event-names text-lg text-white">
+                  {event.groom} <span className="event-amp text-primary"> &amp; </span> {event.bride}
                 </p>
                 <p className="text-[11px] text-white/60">{t.videoCloseHint}</p>
               </div>
