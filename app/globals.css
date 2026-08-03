@@ -1,0 +1,188 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), 'Helvetica Neue', helvetica, arial, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-elevated: var(--elevated);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --color-success: var(--success);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-border: var(--sidebar-border);
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+
+  --shadow-card: rgba(0, 0, 0, 0.3) 0px 8px 8px;
+  --shadow-dialog: rgba(0, 0, 0, 0.5) 0px 8px 24px;
+}
+
+:root {
+  color-scheme: dark;
+
+  /* Surfaces (Spotify near-black cocoon) */
+  --background: #121212;
+  --foreground: #ffffff;
+  --card: #181818;
+  --card-foreground: #ffffff;
+  --elevated: #1f1f1f;
+  --popover: #282828;
+  --popover-foreground: #ffffff;
+
+  /* Spotify green accent */
+  --primary: #1ed760;
+  --primary-foreground: #000000;
+
+  --secondary: #1f1f1f;
+  --secondary-foreground: #ffffff;
+
+  --muted: #1f1f1f;
+  --muted-foreground: #b3b3b3;
+
+  --accent: #252525;
+  --accent-foreground: #ffffff;
+
+  --destructive: #f3727f;
+  --destructive-foreground: #000000;
+  --warning: #ffa42b;
+  --info: #539df5;
+  --success: #1ed760;
+
+  --border: #2a2a2a;
+  --input: #2a2a2a;
+  --ring: #1ed760;
+
+  --chart-1: #1ed760;
+  --chart-2: #539df5;
+  --chart-3: #ffa42b;
+  --chart-4: #f3727f;
+  --chart-5: #b3b3b3;
+
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #ffffff;
+  --sidebar-accent: #1f1f1f;
+  --sidebar-border: #232323;
+
+  --radius: 8px;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background-color: rgba(30, 215, 96, 0.3);
+  }
+}
+
+/*
+ * Safety net: if a motion element is still invisible after paint (stuck on
+ * initial opacity:0 — common on some mobile browsers), force it visible.
+ */
+@layer utilities {
+  @keyframes habari-ensure-visible {
+    to {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+  .motion-safe-appear {
+    animation: habari-ensure-visible 0.01ms linear 1.2s forwards;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .motion-safe-appear {
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+    }
+  }
+}
+
+@layer utilities {
+  .scrollbar-spotify {
+    scrollbar-width: thin;
+    scrollbar-color: #4d4d4d transparent;
+  }
+  .scrollbar-spotify::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .scrollbar-spotify::-webkit-scrollbar-thumb {
+    background-color: #4d4d4d;
+    border-radius: 9999px;
+  }
+  .scrollbar-spotify::-webkit-scrollbar-thumb:hover {
+    background-color: #7c7c7c;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .btn-uppercase {
+    text-transform: uppercase;
+    letter-spacing: 1.6px;
+  }
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  .shadow-dialog {
+    box-shadow: var(--shadow-dialog);
+  }
+}
+
+/* Leaflet venue map — hide default chrome */
+.habari-venue-marker {
+  background: transparent !important;
+  border: none !important;
+}
+.leaflet-container {
+  background: #181818 !important;
+  font: inherit !important;
+}
+.leaflet-control-attribution {
+  display: none !important;
+}
