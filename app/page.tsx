@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Heart, ScanLine, ShieldCheck, Smartphone, Sparkles } from 'lucide-react'
+import { ArrowRight, Heart, Images, ScanLine, ShieldCheck, Smartphone, Sparkles } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSafeEntrance } from '@/components/ui/motion-provider'
@@ -13,6 +13,13 @@ const ROLES = [
     title: 'Public Event',
     desc: 'Guest invitation page — countdown, map, video and wedding details.',
     tag: 'Open event page',
+  },
+  {
+    href: '/event/1001/complete',
+    icon: Images,
+    title: 'Wedding Recap',
+    desc: 'Thank-you hero and Pinterest-style photo & video gallery after the day.',
+    tag: 'Completed event',
   },
   {
     href: '/login/owner',

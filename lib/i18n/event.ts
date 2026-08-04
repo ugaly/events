@@ -40,6 +40,15 @@ export const EVENT_I18N = {
       { time: '10:00 PM', title: 'Send-off', detail: 'Dance & farewell' },
     ],
     locale: 'en-US',
+    thanksTitle: 'Thank you for attending',
+    thanksMessage:
+      'Your presence made our day unforgettable. Relive the joy through these photos and videos from our wedding celebration.',
+    galleryTitle: 'Our moments',
+    galleryHint: 'Scroll for more photos & videos',
+    loadingMore: 'Loading more…',
+    endOfGallery: 'That’s all for now — thank you again',
+    playVideo: 'Play video',
+    closeLightbox: 'Close',
   },
   sw: {
     typeWedding: 'Harusi',
@@ -80,6 +89,15 @@ export const EVENT_I18N = {
       { time: '10:00 usiku', title: 'Kuaga', detail: 'Densi na kuaga' },
     ],
     locale: 'sw-TZ',
+    thanksTitle: 'Asante kwa kuhudhuria',
+    thanksMessage:
+      'Uwepo wenu ulifanya siku yetu isisahaulike. Furahieni tena kupitia picha na video kutoka sherehe yetu ya harusi.',
+    galleryTitle: 'Wakati wetu',
+    galleryHint: 'Sogeza chini kwa picha na video zaidi',
+    loadingMore: 'Inapakia zaidi…',
+    endOfGallery: 'Hayo ndiyo yote kwa sasa — asanteni tena',
+    playVideo: 'Cheza video',
+    closeLightbox: 'Funga',
   },
 } as const
 
