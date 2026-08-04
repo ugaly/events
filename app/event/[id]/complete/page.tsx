@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { use, useCallback, useEffect, useRef, useState } from 'react'
 import {
   EVENT_GALLERY,
+  FALLBACK_IMAGE,
   GALLERY_PAGE_SIZE,
   type GalleryMediaItem,
 } from '@/lib/event-gallery'
@@ -192,16 +193,28 @@ export default function EventCompletePage({ params }: { params: Promise<{ id: st
                     alt={item.caption || ''}
                     loading="lazy"
                     decoding="async"
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      const el = e.currentTarget
+                      if (el.src.endsWith(FALLBACK_IMAGE)) return
+                      el.src = FALLBACK_IMAGE
+                    }}
                     className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 ) : (
                   <>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={item.poster || item.src}
+                      src={item.poster || FALLBACK_IMAGE}
                       alt=""
                       loading="lazy"
                       decoding="async"
+                      referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        const el = e.currentTarget
+                        if (el.src.endsWith(FALLBACK_IMAGE)) return
+                        el.src = FALLBACK_IMAGE
+                      }}
                       className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <span className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
@@ -262,13 +275,19 @@ export default function EventCompletePage({ params }: { params: Promise<{ id: st
               <img
                 src={lightbox.src}
                 alt={lightbox.caption || ''}
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const el = e.currentTarget
+                  if (el.src.endsWith(FALLBACK_IMAGE)) return
+                  el.src = FALLBACK_IMAGE
+                }}
                 className="mx-auto max-h-[88dvh] w-auto max-w-full object-contain"
               />
             ) : (
               <video
                 key={lightbox.id}
                 src={lightbox.src}
-                poster={lightbox.poster}
+                poster={lightbox.poster || FALLBACK_IMAGE}
                 controls
                 autoPlay
                 playsInline
