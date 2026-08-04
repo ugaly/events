@@ -85,7 +85,7 @@ export default function ScanPage() {
 
   return (
     <main className="relative min-h-dvh overflow-x-hidden bg-background">
-      {phase === 'done' ? <Confetti count={64} /> : null}
+      {phase === 'done' ? <Confetti count={80} balloons={12} /> : null}
 
       {/* Simple CSS backdrop — no next/image fill (can hang mobile) */}
       <div
