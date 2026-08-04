@@ -69,8 +69,9 @@ export default function OwnerHomePage() {
             <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-wide text-primary-foreground">
               {FEATURED_EVENT.type}
             </span>
-            <h2 className="mt-2.5 text-balance text-2xl font-bold leading-tight text-white">
-              {FEATURED_EVENT.groom} &amp; {FEATURED_EVENT.bride}
+            <h2 className="event-names mt-2.5 text-balance text-3xl leading-tight text-white sm:text-4xl">
+              {FEATURED_EVENT.groom} <span className="event-amp text-primary">&amp;</span>{' '}
+              {FEATURED_EVENT.bride}
             </h2>
             <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-white/80">
               <span className="flex items-center gap-1.5">

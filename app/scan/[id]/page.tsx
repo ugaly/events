@@ -158,8 +158,10 @@ export default function ScanPage() {
               <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-primary">
                 {FEATURED_EVENT.type}
               </p>
-              <p className="text-sm font-semibold text-foreground">
-                {FEATURED_EVENT.groom} &amp; {FEATURED_EVENT.bride}
+              <p className="event-names mt-1 text-2xl text-foreground sm:text-3xl">
+                {FEATURED_EVENT.groom}{' '}
+                <span className="event-amp text-primary">&amp;</span>{' '}
+                {FEATURED_EVENT.bride}
               </p>
               <p className="mt-0.5 flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
                 <MapPin className="size-3.5" /> {FEATURED_EVENT.venue}

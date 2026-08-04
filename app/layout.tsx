@@ -1,12 +1,18 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Geist, Geist_Mono, Italianno } from 'next/font/google'
 import { MotionProvider } from '@/components/ui/motion-provider'
 import { Toaster } from '@/components/ui/toaster'
 import './globals.css'
 
 const geistSans = Geist({ subsets: ['latin'], variable: '--font-geist-sans' })
 const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono' })
+const italianno = Italianno({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['400'],
+  variable: '--font-event-names',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'Habari Events — Attendance & Event Management',
@@ -30,7 +36,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`dark ${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`dark ${geistSans.variable} ${geistMono.variable} ${italianno.variable}`}
+      suppressHydrationWarning
+    >
       <body className="bg-background text-foreground font-sans antialiased">
         <MotionProvider>{children}</MotionProvider>
         <Toaster />
