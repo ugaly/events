@@ -10,11 +10,12 @@ import {
   Nfc,
   Sofa,
   Star,
+  Ticket,
 } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Confetti } from '@/components/scan/confetti'
-import { ATTENDEES, FEATURED_EVENT } from '@/lib/data'
+import { ATTENDEES, FEATURED_EVENT, formalGuestName } from '@/lib/data'
 import type { Attendee } from '@/lib/types'
 
 type Phase = 'loading' | 'ready' | 'checking' | 'done'
@@ -152,8 +153,15 @@ export default function ScanPage() {
                 </span>
               ) : null}
 
-              <h1 className="mt-3 text-balance text-3xl font-bold leading-tight">{guest.name}</h1>
+              <h1 className="mt-3 text-balance text-3xl font-bold leading-tight">
+                {formalGuestName(guest)}
+              </h1>
               <p className="mt-1 font-mono text-sm text-muted-foreground">{guest.invitationId}</p>
+
+              <span className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-elevated px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-foreground">
+                <Ticket className="size-3.5 text-primary" />
+                Card · {guest.cardType}
+              </span>
 
               <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-primary">
                 {FEATURED_EVENT.type}
@@ -167,7 +175,8 @@ export default function ScanPage() {
                 <MapPin className="size-3.5" /> {FEATURED_EVENT.venue}
               </p>
 
-              <div className="mt-6 grid w-full grid-cols-3 gap-2">
+              <div className="mt-6 grid w-full grid-cols-2 gap-2 sm:grid-cols-4">
+                <InfoTile icon={Ticket} label="Card" value={guest.cardType} />
                 <InfoTile icon={ArmchairIcon} label="Seat" value={guest.seat} />
                 <InfoTile icon={Sofa} label="Table" value={guest.table} />
                 <InfoTile icon={BadgeCheck} label="Group" value={guest.group} />
@@ -187,7 +196,7 @@ export default function ScanPage() {
                 <div className="relative z-10 rounded-2xl bg-primary/12 p-5 text-center ring-1 ring-primary/25">
                   <p className="text-lg font-bold text-primary">Attendance recorded</p>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    Welcome, {guest.name.split(' ')[0]}! Enjoy the celebration.
+                    Welcome, {guest.title} {guest.name.split(' ')[0]}! Enjoy the celebration.
                   </p>
                   <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-background/60 px-3 py-1.5">
                     <Clock className="size-4 text-primary" />

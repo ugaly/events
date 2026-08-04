@@ -26,10 +26,18 @@ export type AttendanceStatus =
 
 export type GuestGroup = 'VIP' | 'Family' | 'Friends' | 'Corporate' | 'General'
 
+/** Honorific shown on scan / attendance (e.g. MR Yusuf Ali) */
+export type GuestTitle = 'Mr' | 'Mrs' | 'Ms' | 'Miss'
+
+/** Invitation card type */
+export type CardType = 'Single' | 'Couple' | 'Family'
+
 export interface Attendee {
   id: string
   invitationId: string
   name: string
+  title: GuestTitle
+  cardType: CardType
   avatar: string
   status: AttendanceStatus
   group: GuestGroup

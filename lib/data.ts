@@ -2,9 +2,11 @@ import type {
   ActivityItem,
   Attendee,
   AttendanceStatus,
+  CardType,
   EventItem,
   EventType,
   GuestGroup,
+  GuestTitle,
   NfcCard,
   Owner,
   PermissionRequest,
@@ -77,6 +79,25 @@ const LAST = [
   'Juma', 'Rashid', 'Yusuf', 'Kassim', 'Hamisi', 'Mwinyi', 'Athman', 'Farah',
 ]
 
+const MALE_FIRST = new Set([
+  'Yusuf', 'Hassan', 'Omar', 'Ibrahim', 'Said', 'Abdi', 'Khalid', 'Farah',
+  'Musa', 'Rashid', 'Bakari', 'Juma', 'Tariq', 'Idris', 'Suleiman',
+])
+
+const CARD_TYPES: CardType[] = ['Single', 'Couple', 'Family', 'Single', 'Single', 'Couple']
+
+function titleFor(first: string, i: number): GuestTitle {
+  if (MALE_FIRST.has(first)) return 'Mr'
+  // Alternate Mrs / Ms / Miss for female-coded names
+  const f: GuestTitle[] = ['Mrs', 'Ms', 'Miss']
+  return f[i % f.length]
+}
+
+/** Display name e.g. "MR Yusuf Ali" */
+export function formalGuestName(a: Pick<Attendee, 'title' | 'name'>) {
+  return `${a.title.toUpperCase()} ${a.name}`
+}
+
 const STATUSES: AttendanceStatus[] = [
   'Checked In', 'Checked In', 'Checked In', 'Pending', 'Absent', 'Permission Requested', 'Late',
 ]
@@ -101,6 +122,8 @@ export const ATTENDEES: Attendee[] = Array.from({ length: 186 }, (_, i) => {
     id: `att-${1000 + i}`,
     invitationId: `INV-${pad(1000 + i, 4)}`,
     name: `${first} ${last}`,
+    title: titleFor(first, i),
+    cardType: CARD_TYPES[i % CARD_TYPES.length],
     avatar: avatarFor(i),
     status,
     group,

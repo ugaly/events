@@ -6,7 +6,7 @@ import { useMemo, useState } from 'react'
 import { MobileHeader } from '@/components/owner/mobile-header'
 import { Avatar, Card, GroupBadge } from '@/components/ui/primitives'
 import { Pill, SearchInput } from '@/components/ui/widgets'
-import { ATTENDEES } from '@/lib/data'
+import { ATTENDEES, formalGuestName } from '@/lib/data'
 import type { Attendee, GuestGroup } from '@/lib/types'
 
 const GROUP_FILTERS: Array<{ label: string; value: 'all' | GuestGroup }> = [
@@ -61,8 +61,10 @@ export default function GuestsPage() {
               <Card className="flex flex-col items-center gap-2 p-4 text-center transition-colors hover:bg-accent">
                 <Avatar src={a.avatar} name={a.name} size={56} />
                 <div>
-                  <p className="line-clamp-1 text-sm font-bold">{a.name}</p>
-                  <p className="text-[11px] text-muted-foreground">{a.invitationCode}</p>
+                  <p className="line-clamp-1 text-sm font-bold">{formalGuestName(a)}</p>
+                  <p className="text-[11px] text-muted-foreground">
+                    {a.cardType} · {a.invitationCode}
+                  </p>
                 </div>
                 <GroupBadge group={a.group} />
               </Card>
@@ -103,9 +105,12 @@ export default function GuestsPage() {
 
               <div className="flex flex-col items-center text-center">
                 <Avatar src={selected.avatar} name={selected.name} size={80} ring />
-                <h3 className="mt-3 text-lg font-bold">{selected.name}</h3>
-                <div className="mt-1.5">
+                <h3 className="mt-3 text-lg font-bold">{formalGuestName(selected)}</h3>
+                <div className="mt-1.5 flex flex-wrap items-center justify-center gap-2">
                   <GroupBadge group={selected.group} />
+                  <span className="rounded-full bg-elevated px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+                    {selected.cardType}
+                  </span>
                 </div>
               </div>
 

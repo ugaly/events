@@ -7,7 +7,7 @@ import { MobileHeader } from '@/components/owner/mobile-header'
 import { Avatar, Card, GroupBadge, StatusBadge } from '@/components/ui/primitives'
 import { toast } from '@/components/ui/toaster'
 import { Pill, SearchInput } from '@/components/ui/widgets'
-import { ATTENDEES } from '@/lib/data'
+import { ATTENDEES, formalGuestName } from '@/lib/data'
 import type { AttendanceStatus } from '@/lib/types'
 
 const FILTERS: Array<{ label: string; value: 'all' | AttendanceStatus }> = [
@@ -92,11 +92,11 @@ export default function AttendancePage() {
                 <Avatar src={a.avatar} name={a.name} size={46} />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    <p className="truncate text-sm font-bold">{a.name}</p>
+                    <p className="truncate text-sm font-bold">{formalGuestName(a)}</p>
                     <GroupBadge group={a.group} />
                   </div>
                   <p className="mt-0.5 text-[11px] text-muted-foreground">
-                    {a.invitationId} · Seat {a.seat} · {a.table}
+                    {a.invitationId} · {a.cardType} · Seat {a.seat} · {a.table}
                   </p>
                   <div className="mt-1.5 flex items-center gap-2">
                     <StatusBadge status={a.status} />
