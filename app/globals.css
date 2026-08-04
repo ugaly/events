@@ -212,3 +212,25 @@
   font-weight: 500;
   line-height: 1.55;
 }
+
+/* —— Scanner check-in confetti (CSS only, mobile-safe) —— */
+@keyframes scan-confetti-fall {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--confetti-x, 0px), 110dvh, 0) rotate(var(--confetti-rot, 540deg));
+    opacity: 0;
+  }
+}
+
+.scan-confetti-piece {
+  animation-name: scan-confetti-fall;
+  animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+  animation-fill-mode: forwards;
+  will-change: transform, opacity;
+}

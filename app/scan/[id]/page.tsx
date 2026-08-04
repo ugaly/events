@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { Confetti } from '@/components/scan/confetti'
 import { ATTENDEES, FEATURED_EVENT } from '@/lib/data'
 import type { Attendee } from '@/lib/types'
 
@@ -84,6 +85,8 @@ export default function ScanPage() {
 
   return (
     <main className="relative min-h-dvh overflow-x-hidden bg-background">
+      {phase === 'done' ? <Confetti count={64} /> : null}
+
       {/* Simple CSS backdrop — no next/image fill (can hang mobile) */}
       <div
         className="pointer-events-none fixed inset-0 bg-cover bg-center opacity-20"
@@ -179,7 +182,7 @@ export default function ScanPage() {
 
             <div className="pt-6">
               {phase === 'done' ? (
-                <div className="rounded-2xl bg-primary/12 p-5 text-center">
+                <div className="relative z-10 rounded-2xl bg-primary/12 p-5 text-center ring-1 ring-primary/25">
                   <p className="text-lg font-bold text-primary">Attendance recorded</p>
                   <p className="mt-1 text-sm text-muted-foreground">
                     Welcome, {guest.name.split(' ')[0]}! Enjoy the celebration.

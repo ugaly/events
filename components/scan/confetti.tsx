@@ -1,43 +1,59 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { useMemo } from 'react'
+import { useMemo, type CSSProperties } from 'react'
 
-const COLORS = ['#1ed760', '#539df5', '#ffa42b', '#f3727f', '#ffffff']
+const COLORS = ['#1ed760', '#539df5', '#ffa42b', '#f3727f', '#ffffff', '#c4b5fd']
 
-export function Confetti({ count = 80 }: { count?: number }) {
+/**
+ * Pure CSS confetti — no Framer Motion (opacity animations were stuck on mobile).
+ */
+export function Confetti({ count = 56 }: { count?: number }) {
   const pieces = useMemo(
     () =>
-      Array.from({ length: count }, (_, i) => ({
-        id: i,
-        x: (Math.random() - 0.5) * 420,
-        y: 320 + Math.random() * 360,
-        rotate: Math.random() * 720 - 360,
-        delay: Math.random() * 0.25,
-        duration: 1.6 + Math.random() * 1.1,
-        color: COLORS[i % COLORS.length],
-        size: 6 + Math.random() * 7,
-        rounded: Math.random() > 0.5,
-      })),
+      Array.from({ length: count }, (_, i) => {
+        const left = 4 + ((i * 17) % 92)
+        const delay = (i % 12) * 0.05
+        const duration = 1.5 + (i % 7) * 0.18
+        const drift = ((i % 9) - 4) * 28
+        const size = 6 + (i % 5) * 2
+        const rounded = i % 3 === 0
+        return {
+          id: i,
+          left,
+          delay,
+          duration,
+          drift,
+          size,
+          rounded,
+          color: COLORS[i % COLORS.length],
+          rotate: (i * 47) % 360,
+        }
+      }),
     [count],
   )
 
   return (
-    <div className="pointer-events-none absolute inset-0 z-20 flex items-start justify-center overflow-hidden">
+    <div
+      className="pointer-events-none fixed inset-0 z-50 overflow-hidden"
+      aria-hidden
+    >
       {pieces.map((p) => (
-        <motion.span
+        <span
           key={p.id}
-          initial={{ opacity: 1, x: 0, y: -20, rotate: 0 }}
-          animate={{ opacity: [1, 1, 0], x: p.x, y: p.y, rotate: p.rotate }}
-          transition={{ duration: p.duration, delay: p.delay, ease: 'easeOut' }}
-          style={{
-            position: 'absolute',
-            top: '30%',
-            width: p.size,
-            height: p.size * (p.rounded ? 1 : 1.6),
-            backgroundColor: p.color,
-            borderRadius: p.rounded ? '9999px' : '2px',
-          }}
+          className="scan-confetti-piece absolute top-[-12px]"
+          style={
+            {
+              left: `${p.left}%`,
+              width: p.size,
+              height: p.rounded ? p.size : p.size * 1.55,
+              backgroundColor: p.color,
+              borderRadius: p.rounded ? '9999px' : '2px',
+              '--confetti-x': `${p.drift}px`,
+              '--confetti-rot': `${p.rotate + 540}deg`,
+              animationDelay: `${p.delay}s`,
+              animationDuration: `${p.duration}s`,
+            } as CSSProperties
+          }
         />
       ))}
     </div>
