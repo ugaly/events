@@ -306,3 +306,69 @@
   will-change: transform, opacity;
   filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.35));
 }
+
+/* —— Drinks order success: human cartoon 3D-style —— */
+@keyframes order-coming-float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.01);
+  }
+}
+
+@keyframes order-coming-shadow {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.34;
+  }
+  50% {
+    transform: scale(0.92);
+    opacity: 0.22;
+  }
+}
+
+@keyframes order-coming-stars {
+  0%,
+  100% {
+    opacity: 0.65;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-4px);
+  }
+}
+
+.order-coming-wrap {
+  position: relative;
+  perspective: 900px;
+}
+
+.order-coming-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  width: 56%;
+  height: 18px;
+  transform: translateX(-50%);
+  border-radius: 9999px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.48) 0%, rgba(0, 0, 0, 0.05) 72%);
+  animation: order-coming-shadow 2.4s ease-in-out infinite;
+}
+
+.order-coming-character {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform-origin: 50% 82%;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.35));
+  animation: order-coming-float 2.4s ease-in-out infinite;
+}
+
+.order-coming-stars {
+  animation: order-coming-stars 1.6s ease-in-out infinite;
+}
+

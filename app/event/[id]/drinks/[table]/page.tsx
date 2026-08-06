@@ -17,6 +17,8 @@ import {
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { OrderComingAnimation } from '@/components/event/order-coming-animation'
+import { Confetti } from '@/components/scan/confetti'
 import { FEATURED_EVENT } from '@/lib/data'
 import {
   DRINKS_I18N,
@@ -707,131 +709,109 @@ export default function EventDrinksPage() {
             onClick={() => setSheetOpen(false)}
           />
           <div className="relative z-10 mx-auto max-h-[88dvh] w-full max-w-3xl overflow-hidden rounded-t-3xl bg-popover shadow-dialog lg:max-h-[min(720px,85dvh)] lg:max-w-[840px] lg:rounded-3xl">
-            <div className="flex items-center justify-between border-b border-border px-5 py-4">
-              <div>
-                <p className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
-                  {table} · {t.complimentaryShort}
+            {confirmed ? (
+              <div className="relative flex flex-col items-center overflow-hidden px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-4 text-center">
+                <Confetti count={68} balloons={8} />
+                <button
+                  type="button"
+                  onClick={() => setSheetOpen(false)}
+                  className="absolute right-4 top-4 z-10 grid size-9 place-items-center rounded-full bg-elevated text-muted-foreground hover:text-foreground"
+                  aria-label={t.close}
+                >
+                  <X className="size-4" />
+                </button>
+                <OrderComingAnimation className="relative z-10 mt-2" />
+                <p className="relative z-10 mt-1 text-2xl font-extrabold tracking-tight text-primary">
+                  {t.comingTitle}
                 </p>
-                <h2 className="text-lg font-bold">
-                  {confirmed ? t.orderConfirmed : t.yourDrinks}
-                </h2>
-              </div>
-              <button
-                type="button"
-                onClick={() => setSheetOpen(false)}
-                className="grid size-9 place-items-center rounded-full bg-elevated text-muted-foreground hover:text-foreground"
-                aria-label={t.close}
-              >
-                <X className="size-4" />
-              </button>
-            </div>
-
-            <div className="max-h-[56dvh] overflow-y-auto px-5 py-4">
-              {confirmed ? (
-                <div className="rounded-3xl border border-primary/30 bg-gradient-to-br from-primary/15 via-card to-card p-5 text-center">
-                  <div className="relative mx-auto mb-4 grid size-36 place-items-center">
-                    <span className="absolute inset-0 animate-spin rounded-full border-2 border-primary/20 border-t-primary" />
-                    <span className="absolute inset-[14%] animate-pulse rounded-full border border-primary/30" />
-                    <span className="absolute inset-[30%] animate-ping rounded-full bg-primary/15" />
-                    <span className="relative z-10 grid size-16 place-items-center rounded-2xl bg-primary text-primary-foreground shadow-dialog">
-                      <ShoppingBag className="size-8" />
-                    </span>
-                    <span className="absolute right-3 top-6 animate-bounce text-primary">
-                      <ChevronRight className="size-5" />
-                    </span>
-                    <span className="absolute left-4 bottom-5 animate-bounce text-primary [animation-delay:120ms]">
-                      <Sparkles className="size-4" />
-                    </span>
-                    <span className="absolute right-6 bottom-3 animate-bounce text-primary/80 [animation-delay:200ms]">
-                      <Sparkles className="size-3.5" />
-                    </span>
-                  </div>
-
-                  <p className="text-xl font-extrabold tracking-tight text-primary">{t.comingTitle}</p>
-                  <p className="mt-1 text-sm text-muted-foreground">{t.comingSubtitle}</p>
-
-                  <div className="mt-4 grid grid-cols-3 gap-2 text-[11px] font-bold">
-                    <div className="rounded-xl bg-primary/15 px-2 py-2 text-primary">{t.stageQueued}</div>
-                    <div className="rounded-xl bg-primary/20 px-2 py-2 text-primary">{t.stageMixing}</div>
-                    <div className="rounded-xl bg-primary px-2 py-2 text-primary-foreground">{t.stageServing}</div>
-                  </div>
-
-                  <p className="mt-4 text-base font-bold text-primary">{t.onWay(table)}</p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {t.orderLabel}{' '}
-                    <span className="font-mono font-bold text-foreground">{orderNo}</span>
-                  </p>
-                  <p className="mt-2 text-xs text-muted-foreground">{t.noPayment}</p>
-                </div>
-              ) : null}
-
-              {!confirmed ? (
-                <ul className="space-y-3">
-                  {lines.map(({ item, qty }) => (
-                    <li key={item.id} className="flex items-center gap-3">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={item.image}
-                        alt=""
-                        className="size-16 rounded-xl object-cover sm:size-[4.5rem]"
-                        referrerPolicy="no-referrer"
-                        onError={(e) => {
-                          const el = e.currentTarget
-                          if (!el.src.endsWith(FALLBACK_IMG)) el.src = FALLBACK_IMG
-                        }}
-                      />
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-bold">{item.name}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {t.qty} {qty}
-                        </p>
-                      </div>
-                      <div className="inline-flex items-center gap-1 rounded-full bg-elevated p-0.5">
-                        <button
-                          type="button"
-                          onClick={() => setQty(item.id, qty - 1)}
-                          className="grid size-8 place-items-center rounded-full"
-                        >
-                          <Minus className="size-3.5" />
-                        </button>
-                        <span className="min-w-5 text-center text-sm font-bold">{qty}</span>
-                        <button
-                          type="button"
-                          onClick={() => setQty(item.id, qty + 1)}
-                          className="grid size-8 place-items-center rounded-full bg-primary text-primary-foreground"
-                        >
-                          <Plus className="size-3.5" />
-                        </button>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
-            </div>
-
-            <div className="border-t border-border px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
-              <p className="mb-3 text-center text-xs text-muted-foreground">
-                {t.itemsTo(totalQty, totalQty === 1 ? t.item : t.items, table)}
-              </p>
-              {confirmed ? (
+                <p className="relative z-10 mt-2 font-mono text-sm font-bold text-foreground">
+                  {t.orderLabel} {orderNo}
+                </p>
                 <button
                   type="button"
                   onClick={clearOrder}
-                  className="flex h-12 w-full items-center justify-center rounded-full bg-elevated text-sm font-bold"
+                  className="relative z-10 mt-6 flex h-12 w-full max-w-sm items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground shadow-dialog"
                 >
                   {t.orderMore}
                 </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={confirmOrder}
-                  disabled={!lines.length}
-                  className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary text-sm font-bold text-primary-foreground shadow-dialog disabled:opacity-50"
-                >
-                  <Check className="size-4" /> {t.confirmOrder}
-                </button>
-              )}
-            </div>
+              </div>
+            ) : (
+              <>
+                <div className="flex items-center justify-between border-b border-border px-5 py-4">
+                  <div>
+                    <p className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
+                      {table} · {t.complimentaryShort}
+                    </p>
+                    <h2 className="text-lg font-bold">{t.yourDrinks}</h2>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setSheetOpen(false)}
+                    className="grid size-9 place-items-center rounded-full bg-elevated text-muted-foreground hover:text-foreground"
+                    aria-label={t.close}
+                  >
+                    <X className="size-4" />
+                  </button>
+                </div>
+
+                <div className="max-h-[50dvh] overflow-y-auto px-5 py-4">
+                  <ul className="space-y-3">
+                    {lines.map(({ item, qty }) => (
+                      <li key={item.id} className="flex items-center gap-3">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={item.image}
+                          alt=""
+                          className="size-16 rounded-xl object-cover sm:size-[4.5rem]"
+                          referrerPolicy="no-referrer"
+                          onError={(e) => {
+                            const el = e.currentTarget
+                            if (!el.src.endsWith(FALLBACK_IMG)) el.src = FALLBACK_IMG
+                          }}
+                        />
+                        <div className="min-w-0 flex-1">
+                          <p className="truncate text-sm font-bold">{item.name}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {t.qty} {qty}
+                          </p>
+                        </div>
+                        <div className="inline-flex items-center gap-1 rounded-full bg-elevated p-0.5">
+                          <button
+                            type="button"
+                            onClick={() => setQty(item.id, qty - 1)}
+                            className="grid size-8 place-items-center rounded-full"
+                          >
+                            <Minus className="size-3.5" />
+                          </button>
+                          <span className="min-w-5 text-center text-sm font-bold">{qty}</span>
+                          <button
+                            type="button"
+                            onClick={() => setQty(item.id, qty + 1)}
+                            className="grid size-8 place-items-center rounded-full bg-primary text-primary-foreground"
+                          >
+                            <Plus className="size-3.5" />
+                          </button>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="border-t border-border px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+                  <p className="mb-3 text-center text-xs text-muted-foreground">
+                    {t.itemsTo(totalQty, totalQty === 1 ? t.item : t.items, table)}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={confirmOrder}
+                    disabled={!lines.length}
+                    className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary text-sm font-bold text-primary-foreground shadow-dialog disabled:opacity-50"
+                  >
+                    <Check className="size-4" /> {t.confirmOrder}
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       ) : null}
