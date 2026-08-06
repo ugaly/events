@@ -470,7 +470,7 @@ export default function EventDrinksPage() {
         </div>
 
         {/* Category image tabs */}
-        <div className="mx-auto mt-3 flex max-w-2xl gap-3 overflow-x-auto px-4 pb-3.5 pt-1 no-scrollbar sm:px-6 lg:flex-wrap lg:justify-center lg:overflow-visible lg:px-8">
+        <div className="mx-auto mt-3 flex w-full max-w-2xl flex-nowrap gap-3 overflow-x-auto px-4 pb-3.5 pt-1 no-scrollbar sm:px-6 lg:max-w-full lg:px-8">
           <button
             type="button"
             onClick={() => setActiveCat('all')}
@@ -726,42 +726,66 @@ export default function EventDrinksPage() {
               </button>
             </div>
 
-            <div className="max-h-[50dvh] overflow-y-auto px-5 py-4">
+            <div className="max-h-[56dvh] overflow-y-auto px-5 py-4">
               {confirmed ? (
-                <div className="rounded-2xl bg-primary/12 p-5 text-center ring-1 ring-primary/25">
-                  <span className="mx-auto grid size-12 place-items-center rounded-full bg-primary text-primary-foreground">
-                    <Check className="size-6" strokeWidth={3} />
-                  </span>
-                  <p className="mt-3 text-base font-bold text-primary">{t.onWay(table)}</p>
+                <div className="rounded-3xl border border-primary/30 bg-gradient-to-br from-primary/15 via-card to-card p-5 text-center">
+                  <div className="relative mx-auto mb-4 grid size-36 place-items-center">
+                    <span className="absolute inset-0 animate-spin rounded-full border-2 border-primary/20 border-t-primary" />
+                    <span className="absolute inset-[14%] animate-pulse rounded-full border border-primary/30" />
+                    <span className="absolute inset-[30%] animate-ping rounded-full bg-primary/15" />
+                    <span className="relative z-10 grid size-16 place-items-center rounded-2xl bg-primary text-primary-foreground shadow-dialog">
+                      <ShoppingBag className="size-8" />
+                    </span>
+                    <span className="absolute right-3 top-6 animate-bounce text-primary">
+                      <ChevronRight className="size-5" />
+                    </span>
+                    <span className="absolute left-4 bottom-5 animate-bounce text-primary [animation-delay:120ms]">
+                      <Sparkles className="size-4" />
+                    </span>
+                    <span className="absolute right-6 bottom-3 animate-bounce text-primary/80 [animation-delay:200ms]">
+                      <Sparkles className="size-3.5" />
+                    </span>
+                  </div>
+
+                  <p className="text-xl font-extrabold tracking-tight text-primary">{t.comingTitle}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{t.comingSubtitle}</p>
+
+                  <div className="mt-4 grid grid-cols-3 gap-2 text-[11px] font-bold">
+                    <div className="rounded-xl bg-primary/15 px-2 py-2 text-primary">{t.stageQueued}</div>
+                    <div className="rounded-xl bg-primary/20 px-2 py-2 text-primary">{t.stageMixing}</div>
+                    <div className="rounded-xl bg-primary px-2 py-2 text-primary-foreground">{t.stageServing}</div>
+                  </div>
+
+                  <p className="mt-4 text-base font-bold text-primary">{t.onWay(table)}</p>
                   <p className="mt-1 text-sm text-muted-foreground">
                     {t.orderLabel}{' '}
                     <span className="font-mono font-bold text-foreground">{orderNo}</span>
                   </p>
-                  <p className="mt-3 text-xs text-muted-foreground">{t.noPayment}</p>
+                  <p className="mt-2 text-xs text-muted-foreground">{t.noPayment}</p>
                 </div>
               ) : null}
 
-              <ul className={`space-y-3 ${confirmed ? 'mt-4' : ''}`}>
-                {lines.map(({ item, qty }) => (
-                  <li key={item.id} className="flex items-center gap-3">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={item.image}
-                      alt=""
-                      className="size-16 rounded-xl object-cover sm:size-[4.5rem]"
-                      referrerPolicy="no-referrer"
-                      onError={(e) => {
-                        const el = e.currentTarget
-                        if (!el.src.endsWith(FALLBACK_IMG)) el.src = FALLBACK_IMG
-                      }}
-                    />
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-bold">{item.name}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {t.qty} {qty}
-                      </p>
-                    </div>
-                    {!confirmed ? (
+              {!confirmed ? (
+                <ul className="space-y-3">
+                  {lines.map(({ item, qty }) => (
+                    <li key={item.id} className="flex items-center gap-3">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={item.image}
+                        alt=""
+                        className="size-16 rounded-xl object-cover sm:size-[4.5rem]"
+                        referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          const el = e.currentTarget
+                          if (!el.src.endsWith(FALLBACK_IMG)) el.src = FALLBACK_IMG
+                        }}
+                      />
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-bold">{item.name}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {t.qty} {qty}
+                        </p>
+                      </div>
                       <div className="inline-flex items-center gap-1 rounded-full bg-elevated p-0.5">
                         <button
                           type="button"
@@ -779,14 +803,10 @@ export default function EventDrinksPage() {
                           <Plus className="size-3.5" />
                         </button>
                       </div>
-                    ) : (
-                      <span className="rounded-full bg-primary/15 px-2.5 py-1 text-xs font-bold text-primary">
-                        ×{qty}
-                      </span>
-                    )}
-                  </li>
-                ))}
-              </ul>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
             </div>
 
             <div className="border-t border-border px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
