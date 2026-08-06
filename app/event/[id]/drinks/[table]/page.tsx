@@ -243,14 +243,14 @@ export default function EventDrinksPage() {
     const scannedMeta = EVENT_TABLES.find((t) => t.code === scannedTable)
 
     return (
-      <main className="relative flex min-h-dvh flex-col overflow-x-hidden bg-background">
+      <main className="relative flex min-h-dvh flex-col overflow-x-hidden bg-background lg:px-6">
         <div
           className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-25"
           style={{ backgroundImage: `url(${event.image})` }}
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background/70 via-background to-background" />
 
-        <header className="relative z-10 flex items-center justify-between gap-3 px-4 py-4 sm:px-6">
+        <header className="relative z-10 mx-auto flex w-full max-w-lg items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:max-w-2xl">
           <Link href="/" className="flex min-w-0 items-center gap-2">
             <span className="grid size-9 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground">
               <Sparkles className="size-4" />
@@ -260,7 +260,7 @@ export default function EventDrinksPage() {
           <LangToggle lang={lang} onChange={changeLang} />
         </header>
 
-        <div className="relative z-10 mx-auto flex w-full max-w-md flex-1 flex-col px-4 pb-8 sm:px-6">
+        <div className="relative z-10 mx-auto flex w-full max-w-md flex-1 flex-col px-4 pb-8 sm:px-6 lg:max-w-xl">
           {gate === 'ask' ? (
             <div className="flex flex-1 flex-col justify-center">
               <div className="rounded-3xl bg-card p-6 shadow-dialog ring-1 ring-border/50">
@@ -336,7 +336,7 @@ export default function EventDrinksPage() {
                 {t.tablesCount(filteredTables.length)}
               </p>
 
-              <ul className="mt-2 min-h-0 flex-1 space-y-2 overflow-y-auto pb-4">
+              <ul className="mt-2 min-h-0 flex-1 space-y-2 overflow-y-auto pb-4 lg:grid lg:grid-cols-2 lg:gap-3 lg:space-y-0">
                 {filteredTables.map((row) => {
                   const isScanned = row.code === scannedTable
                   return (
@@ -379,8 +379,9 @@ export default function EventDrinksPage() {
   }
 
   return (
-    <main className="relative min-h-dvh bg-background pb-28">
-      <section className="relative isolate overflow-hidden">
+    <main className="relative min-h-dvh bg-background pb-28 lg:pb-32">
+      <div className="mx-auto w-full max-w-3xl lg:max-w-[840px]">
+      <section className="relative isolate overflow-hidden lg:rounded-b-3xl">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${event.image})` }}
@@ -394,8 +395,8 @@ export default function EventDrinksPage() {
             `,
           }}
         />
-        <div className="relative z-10 px-4 pb-5 pt-4 sm:px-6">
-          <div className="flex items-center justify-between gap-3">
+        <div className="relative z-10 px-4 pb-6 pt-4 sm:px-6 lg:px-8 lg:pb-8 lg:pt-6">
+          <div className="flex items-center justify-between gap-3 lg:mx-auto lg:max-w-2xl">
             <Link href="/" className="flex min-w-0 items-center gap-2">
               <span className="grid size-9 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground">
                 <Sparkles className="size-4" />
@@ -418,14 +419,14 @@ export default function EventDrinksPage() {
             </div>
           </div>
 
-          <div className="mt-8 max-w-lg">
+          <div className="mt-8 lg:mx-auto lg:max-w-2xl lg:text-center">
             <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary">
               {t.complimentary}
             </p>
-            <h1 className="event-names mt-2 text-4xl text-white sm:text-5xl">
+            <h1 className="event-names mt-2 text-4xl text-white sm:text-5xl lg:text-6xl">
               {event.groom} <span className="event-amp text-primary">&amp;</span> {event.bride}
             </h1>
-            <p className="mt-2 max-w-sm text-sm leading-relaxed text-white/80">
+            <p className="mt-2 max-w-sm text-sm leading-relaxed text-white/80 lg:mx-auto lg:max-w-lg lg:text-base">
               {t.heroBody(table)}
             </p>
           </div>
@@ -433,9 +434,9 @@ export default function EventDrinksPage() {
       </section>
 
       {/* Sticky filters */}
-      <div className="sticky top-0 z-30 border-b border-border/50 bg-background/95 shadow-[0_8px_30px_rgba(0,0,0,0.25)] backdrop-blur-xl">
+      <div className="sticky top-0 z-30 border-b border-border/50 bg-background/95 shadow-[0_8px_30px_rgba(0,0,0,0.25)] backdrop-blur-xl lg:rounded-b-2xl">
         {/* Alcohol segmented control */}
-        <div className="px-4 pt-3 sm:px-6">
+        <div className="px-4 pt-3 sm:px-6 lg:px-8">
           <div className="mx-auto flex max-w-2xl rounded-2xl bg-elevated p-1.5 shadow-inner">
             {(
               [
@@ -469,7 +470,7 @@ export default function EventDrinksPage() {
         </div>
 
         {/* Category image tabs */}
-        <div className="mt-3 flex gap-3 overflow-x-auto px-4 pb-3.5 pt-1 no-scrollbar sm:px-6">
+        <div className="mx-auto mt-3 flex max-w-2xl gap-3 overflow-x-auto px-4 pb-3.5 pt-1 no-scrollbar sm:px-6 lg:flex-wrap lg:justify-center lg:overflow-visible lg:px-8">
           <button
             type="button"
             onClick={() => setActiveCat('all')}
@@ -542,20 +543,21 @@ export default function EventDrinksPage() {
       </div>
 
       {/* Menu — large images, no prices */}
-      <div className="mx-auto max-w-2xl space-y-8 px-4 py-5 sm:px-6">
+      <div className="space-y-8 px-4 py-5 sm:px-6 lg:px-8">
         {grouped.map((section) => (
           <section key={section.id} id={`cat-${section.id}`}>
-            <div className="mb-3.5 flex items-end justify-between gap-3">
-              <div>
-                <h2 className="text-lg font-bold tracking-tight">{t.categories[section.id]}</h2>
+            <div className="relative mb-3.5 flex items-end justify-between gap-3">
+              <div className="flex-1 lg:text-center">
+                <h2 className="text-lg font-bold tracking-tight lg:text-xl">{t.categories[section.id]}</h2>
                 <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                   {section.alcohol === 'alcoholic' ? t.alcoholic : t.nonAlcoholic} · {t.included}
+                  <span className="lg:hidden"> · {section.items.length}</span>
                 </p>
               </div>
-              <span className="text-xs text-muted-foreground">{section.items.length}</span>
+              <span className="hidden text-xs text-muted-foreground lg:inline">{section.items.length}</span>
             </div>
 
-            <ul className="space-y-4">
+            <ul className="space-y-4 lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0">
               {section.items.map((drink) => {
                 const qty = cart[drink.id] ?? 0
                 const selected = qty > 0
@@ -668,13 +670,14 @@ export default function EventDrinksPage() {
           </div>
         ) : null}
       </div>
+      </div>
 
       {totalQty > 0 && !sheetOpen ? (
-        <div className="fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-2">
+        <div className="fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-2 lg:px-8">
           <button
             type="button"
             onClick={() => setSheetOpen(true)}
-            className="mx-auto flex h-14 w-full max-w-2xl items-center justify-between gap-3 rounded-full bg-primary px-5 text-primary-foreground shadow-dialog transition active:scale-[0.99]"
+            className="mx-auto flex h-14 w-full max-w-3xl items-center justify-between gap-3 rounded-full bg-primary px-5 text-primary-foreground shadow-dialog transition active:scale-[0.99] lg:max-w-[840px]"
           >
             <span className="flex items-center gap-2.5">
               <span className="grid size-8 place-items-center rounded-full bg-primary-foreground/15">
@@ -696,14 +699,14 @@ export default function EventDrinksPage() {
       ) : null}
 
       {sheetOpen ? (
-        <div className="fixed inset-0 z-50 flex flex-col justify-end">
+        <div className="fixed inset-0 z-50 flex flex-col justify-end lg:items-center lg:justify-center lg:p-8">
           <button
             type="button"
             className="absolute inset-0 bg-black/70 backdrop-blur-sm"
             aria-label={t.close}
             onClick={() => setSheetOpen(false)}
           />
-          <div className="relative z-10 mx-auto max-h-[88dvh] w-full max-w-2xl overflow-hidden rounded-t-3xl bg-popover shadow-dialog">
+          <div className="relative z-10 mx-auto max-h-[88dvh] w-full max-w-3xl overflow-hidden rounded-t-3xl bg-popover shadow-dialog lg:max-h-[min(720px,85dvh)] lg:max-w-[840px] lg:rounded-3xl">
             <div className="flex items-center justify-between border-b border-border px-5 py-4">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
