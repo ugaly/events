@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Heart, Images, ScanLine, ShieldCheck, Smartphone, Sparkles } from 'lucide-react'
+import { ArrowRight, GlassWater, Heart, Images, ScanLine, ShieldCheck, Smartphone, Sparkles } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSafeEntrance } from '@/components/ui/motion-provider'
@@ -20,6 +20,13 @@ const ROLES = [
     title: 'Wedding Recap',
     desc: 'Thank-you hero and Pinterest-style photo & video gallery after the day.',
     tag: 'Completed event',
+  },
+  {
+    href: '/event/1001/drinks/T-05',
+    icon: GlassWater,
+    title: 'Table Drinks',
+    desc: 'OddMenu-style drinks order — scan table QR, pick by category, confirm.',
+    tag: 'Table T-05 demo',
   },
   {
     href: '/login/owner',
