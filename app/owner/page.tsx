@@ -5,8 +5,6 @@ import {
   CalendarDays,
   Clock,
   MapPin,
-  ScanLine,
-  TrendingUp,
   UserCheck,
   UserPlus,
   UserX,
@@ -32,8 +30,6 @@ const SUMMARY = [
   { icon: UserCheck, label: 'Attended', value: STATS.attended, tone: 'text-primary' },
   { icon: UserX, label: 'Absent', value: STATS.absent, tone: 'text-destructive' },
   { icon: Clock, label: 'Late', value: STATS.late, tone: 'text-warning' },
-  { icon: ScanLine, label: 'Checked In Today', value: STATS.checkedInToday, tone: 'text-primary' },
-  { icon: TrendingUp, label: 'Permission Reqs', value: STATS.permissionRequests, tone: 'text-info' },
 ]
 
 const dateLabel = new Date(FEATURED_EVENT.date).toLocaleDateString('en-US', {
